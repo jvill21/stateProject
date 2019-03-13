@@ -1,0 +1,50 @@
+Montgomery;Alabama;4887871;Camellia
+Juneau;Alaska;737438;Forget-me-not
+Phoenix;Arizona;7171646;Saguaro cactus blossom
+Little Rock;Arkansas;3013825;Apple blossom
+Sacramento;California;39557045;California poppy
+Denver;Colorado;5695564;Rocky Mountain Columbine
+Hartford;Connecticut;3572665;Mountain laurel
+Dover;Delaware;967171;Peach blossom
+Tallahassee;Florida;21299325;Orange blossom
+Atlanta;Georgia;10519475;Cherokee Rose
+Honolulu;Hawaii;1420491;Hawaiian hibiscus
+Boise;Idaho;1754208;Syringa
+Springfield;Illinois;12741080;Violet
+Indianapolis;Indiana;6691878;Peony
+Des Moines;Iowa;3156145;Wild Prairie Rose
+Topeka;Kansas;2911505;Sunflower
+Frankfort;Kentucky;4468402;Goldenrod
+Baton Rouge;Louisiana;4659978;Magnolia
+Augusta;Maine;1338404;White pine cone and tassel
+Annapolis;Maryland;6042718;Black-eyed susan
+Boston;Massachusetts;6902149;Mayflower
+Lansing;Michigan;9998915;Apple blossom
+Saint Paul;Minnesota;5611179;Pink and white lady's slipper
+Jackson;Mississippi;2986530;Magnolia
+Jefferson City;Missouri;6126452;Hawthorn
+Helena;Montana;1062305;Bitterroot
+Lincoln;Nebraska;1929268;Goldenrod
+Carson City;Nevada;3034392;Sagebrush
+Concord;New Hampshire;1356458;Purple lilac
+Trenton;New Jersey;9032873;Violet
+Santa Fe;New Mexico;2095428;Yucca flower
+Albany;New York;19542209;Rose
+Raleigh;North Carolina;10383620;Flowering Dogwood
+Bismarck;North Dakota;760077;Wild Prairie Rose
+Columbus;Ohio;11689442;Scarlet Carnation
+Oklahoma City;Oklahoma;3943079;Oklahoma Rose
+Salem;Oregon;4190713;Oregon grape
+Harrisburg;Pennsylvania;12807060;Mountain Laurel
+Providence;Rhode Island;1057315;Violet
+Columbia;South Carolina;5084127;Yellow Jessamine
+Pierre;South Dakota;882235;Pasque flower
+Nashville;Tennessee;6770010;Iris
+Austin;Texas;28701845;Bluebonnet
+Salt Lake City;Utah;3161105;Sego lily
+Montpelier;Vermont;626299;Red Clover
+Richmond;Virginia;8517685;American Dogwood
+Olympia;Washington;7535591;Coast Rhododendron
+Charleston;West Virginia;1805832;Rhododendron
+Madison;Wisconsin;5813568;Wood Violet
+Cheyenne;Wyoming;577737;Indian Paintbrush
