@@ -65,5 +65,34 @@ public class State {
 				return stateName2.compareTo(stateName1);
 			}
 		};
-	
+		
+		/* Comparator for sorting list by Name A-Z */ 
+		public static Comparator<State> StateNameSortAZ = new Comparator<State>() {
+			public int compare(State s1, State s2) {
+				String stateName1 = s1.getName().toUpperCase();
+				String stateName2 = s2.getName().toUpperCase();
+				
+				return stateName1.compareTo(stateName2);
+			}
+		};
+		
+		/* Comparator for sorting list by Name Z-A*/ 
+		public static Comparator<State> StatePopSortHL = new Comparator<State>() {
+			public int compare(State s1, State s2) {
+				int statePop1 = s1.getPop();
+				int statePop2 = s2.getPop();
+				
+				return statePop2 - statePop1;
+			}
+		};
+
+		/* Comparator for sorting list by Name Z-A*/ 
+		public static Comparator<State> StatePopSortLH = new Comparator<State>() {
+			public int compare(State s1, State s2) {
+				int statePop1 = s1.getPop();
+				int statePop2 = s2.getPop();
+				
+				return statePop1 - statePop2;
+			}
+		};
 }

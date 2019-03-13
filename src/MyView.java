@@ -27,6 +27,15 @@ public class MyView extends JFrame {
 	/* checklist that allows users to select a state*/
 	ArrayList<JRadioButton> stateCheckList = new ArrayList<>();
 	
+	private boolean addedToList = false;
+	
+	private String selectedState;
+	private String selectedCapitol;
+	private int selectedPopulation;
+	private String selectedFlower;
+	
+	int selectedIndex = 0;
+	
 	/* grid used to map out user interface*/
 	GridBagConstraints g;
 	
@@ -41,10 +50,141 @@ public class MyView extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		states();
+		// addScreen();
 		// login();
 	}
 	
 	
+	public void addScreen() {
+		
+		g = new GridBagConstraints();
+		
+		JPanel panel = new JPanel(new GridBagLayout());
+		
+		getContentPane().removeAll();
+		getContentPane().repaint();
+		
+		JLabel name = new JLabel("State Name: ");
+		JLabel capitol = new JLabel("State Capitol: ");
+		JLabel pop = new JLabel("Population Size: ");
+		JLabel flower = new JLabel("State Flower: ");
+		
+		JTextField stateName = new JTextField(30);
+		JTextField capName = new JTextField(30);
+		JTextField population = new JTextField(30);
+		JTextField flowerName = new JTextField(30);
+		
+		JButton add = new JButton("Add State");
+		JButton cancel = new JButton("Cancel");
+		
+		g.gridx = 0;
+		g.gridy = 0;
+		panel.add(name, g);
+		g.gridy = 2;
+		panel.add(capitol, g);
+		g.gridy = 4;
+		panel.add(pop, g);
+		g.gridy = 6;
+		panel.add(flower, g);
+		
+		g.gridx = 1;
+		g.gridy = 0;
+		panel.add(stateName, g);
+		g.gridy = 2;
+		panel.add(capName, g);
+		g.gridy = 4;
+		panel.add(population, g);
+		g.gridy = 6;
+		panel.add(flowerName, g);
+		
+		g.gridy = 8;
+		panel.add(add, g);
+		g.gridy = 10;
+		panel.add(cancel, g);
+		
+		add(panel);
+		revalidate();
+		
+		cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				states();
+			}
+		});
+		
+		add.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				State s = new State(stateName.getText(), capName.getText(), Integer.parseInt(population.getText()), flowerName.getText());
+				stateList.add(s);
+				states();
+			}
+		});
+	}
+	
+	
+	public void editScreen() {
+		
+g = new GridBagConstraints();
+		
+		JPanel panel = new JPanel(new GridBagLayout());
+		
+		getContentPane().removeAll();
+		getContentPane().repaint();
+		
+		JLabel name = new JLabel("State Name: ");
+		JLabel capitol = new JLabel("State Capitol: ");
+		JLabel pop = new JLabel("Population Size: ");
+		JLabel flower = new JLabel("State Flower: ");
+		
+		JTextField stateName = new JTextField(selectedState, 30);
+		JTextField capName = new JTextField(selectedCapitol, 30);
+		JTextField population = new JTextField(Integer.toString(selectedPopulation), 30);
+		JTextField flowerName = new JTextField(selectedFlower, 30);
+		
+		JButton save = new JButton("Save Changes");
+		JButton cancel = new JButton("Cancel");
+		
+		g.gridx = 0;
+		g.gridy = 0;
+		panel.add(name, g);
+		g.gridy = 2;
+		panel.add(capitol, g);
+		g.gridy = 4;
+		panel.add(pop, g);
+		g.gridy = 6;
+		panel.add(flower, g);
+		
+		g.gridx = 1;
+		g.gridy = 0;
+		panel.add(stateName, g);
+		g.gridy = 2;
+		panel.add(capName, g);
+		g.gridy = 4;
+		panel.add(population, g);
+		g.gridy = 6;
+		panel.add(flowerName, g);
+		
+		g.gridy = 8;
+		panel.add(save, g);
+		g.gridy = 10;
+		panel.add(cancel, g);
+		
+		add(panel);
+		revalidate();
+		
+		cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				states();
+			}
+		});
+		
+		save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				State s = new State(stateName.getText(), capName.getText(), Integer.parseInt(population.getText()), flowerName.getText());
+				stateList.add(s);
+				states();
+			}
+		});
+	}
 	
 	/* creates the interface for viewing a list of states */
 	public void states() {
@@ -56,6 +196,7 @@ public class MyView extends JFrame {
 		g.insets = new Insets(5,30,5,30);
 		g.anchor = GridBagConstraints.WEST;
 		
+		stateCheckList.clear();
 		getContentPane().removeAll();
 		getContentPane().repaint();
 		
@@ -93,6 +234,7 @@ public class MyView extends JFrame {
 
 		String[] filters = {"Name A-Z", "Name Z-A", "Population L-H", "Population H-L"};
 		JComboBox filter = new JComboBox(filters);
+		filter.setSelectedIndex(selectedIndex);
 		
 		JTextField field1 = new JTextField(20);
 		
@@ -125,17 +267,23 @@ public class MyView extends JFrame {
 		centerPanel.add(flower, g);
 		g.gridx = 0;
 		
-		ButtonGroup group = new ButtonGroup();
 		
-		for(int i = 0; i < stateList.size(); i++) {
-			r1 = new JRadioButton(""+stateList.get(i).getName());
-			r1.setName(stateList.get(i).getName());
-			stateCheckList.add(r1);
-			group.add(r1);
+		if (addedToList == false) {
+			ButtonGroup group = new ButtonGroup();
+			
+			
+			for(int i = 0; i < stateList.size(); i++) {
+				r1 = new JRadioButton(""+stateList.get(i).getName());
+				r1.setName(stateList.get(i).getName());
+				stateCheckList.add(r1);
+				group.add(r1);
+			}
+			// addedToList = true;
 		}
 		
 		for(int i = 0; i < stateCheckList.size(); i++) {
 			g.gridy = i+1;
+			// stateCheckList.get(i).setName(stateList.get(i).getName());
 			centerPanel.add(stateCheckList.get(i), g);
 			capName = new JLabel("" + stateList.get(i).getCap());
 			popName = new JLabel("" + stateList.get(i).getPop());
@@ -168,15 +316,64 @@ public class MyView extends JFrame {
 		
 		filter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(filter.getSelectedItem() == "Name Z-A") {
+				selectedIndex = filter.getSelectedIndex();
+				if(selectedIndex == 1) {
 					Collections.sort(stateList, State.StateNameSortZA);
-					
+					System.out.println("Z-A");
+					// filter.setSelectedIndex(selectedIndex);
 				}
+				
+				if(selectedIndex == 0) {
+					Collections.sort(stateList, State.StateNameSortAZ);
+					System.out.println("A-Z");
+				}
+				
+				if(selectedIndex == 2) {
+					Collections.sort(stateList, State.StatePopSortLH);
+					System.out.println("L-H");
+				}
+				
+				if(selectedIndex == 3) {
+					Collections.sort(stateList, State.StatePopSortHL);
+					System.out.println("H-L");
+				}
+
+				// stateCheckList.clear();
 				states();
 			}
 		});
 		
+		add.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addScreen();
+			}
+		});
 		
+		edit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < stateCheckList.size(); i++) {
+					if(stateCheckList.get(i).isSelected()) {
+						selectedState = stateList.get(i).getName();
+						selectedCapitol = stateList.get(i).getCap();
+						selectedPopulation = stateList.get(i).getPop();
+						selectedFlower = stateList.get(i).getFlower();
+					}
+				}
+				
+				editScreen();
+			}
+		});
+		
+		remove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < stateCheckList.size(); i++) {
+					if(stateCheckList.get(i).isSelected()) {
+						stateList.remove(i);
+					}
+				}
+				states();
+			}
+		});
 	}
 
 
