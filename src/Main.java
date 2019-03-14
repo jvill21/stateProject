@@ -5,11 +5,11 @@ import java.util.Collections;
 public class Main {
 
 	public static void main(String[] args) throws Exception{
-		// TODO Auto-generated method stub
 		
-		
+		/* create a new view */
 		MyView view = new MyView();
 		
+		/* create new Array List of state objects from state info file */
 		BufferedReader in = new BufferedReader(new FileReader("stateInfo.txt"));
 		String str;
 		int i = 0;
@@ -20,12 +20,7 @@ public class Main {
 			i++;
 		}
 		
-		// System.out.println(view.stateList.get(0).getName());
-		
-		// Collections.sort(view.stateList, State.StateNameSortZA);
-		
-		// System.out.println(view.stateList.get(0).getName());
-		
+		/* render view*/
 		view.buildFrame();
 	}
 
