@@ -5,8 +5,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -18,7 +21,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 
 public class MyView extends JFrame {
 	
@@ -28,14 +35,20 @@ public class MyView extends JFrame {
 	/* checklist that allows users to select a state*/
 	ArrayList<JRadioButton> stateCheckList = new ArrayList<>();
 	
+	/* List used to filter results when searching*/
+	ArrayList<State> filterList = new ArrayList<State>();
+	
+	/* master list of all created states*/
+	ArrayList<State> masterList = new ArrayList<State>();
+	
+	boolean initialRun = false;
+	
 	/* flag to keep radio button list from being replicated*/ 
 	private boolean addedToList = false;
 	
-	/* fields for a selected state object*/
-	private String selectedState;
-	private String selectedCapitol;
-	private int selectedPopulation;
-	private String selectedFlower;
+	/* string used to filter through search box*/
+	public String s = "";
+	
 	
 	/* index of a selected State in stateList */
 	int selectedIndex = 0;
@@ -59,6 +72,8 @@ public class MyView extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
+		System.out.println("starting a new buildFrame method");
+		// field1.requestFocusInWindow();
 		states();
 	}
 	
@@ -131,6 +146,7 @@ public class MyView extends JFrame {
 					try {
 						State s = new State(stateName.getText(), capName.getText(), Integer.parseInt(population.getText()), flowerName.getText());
 						stateList.add(s);
+						masterList.add(s);
 						states();
 					}
 					catch (NumberFormatException ex) {
@@ -223,6 +239,7 @@ g = new GridBagConstraints();
 		});
 	}
 	
+	
 	/* creates the interface for viewing a list of states */
 	public void states() {
 		
@@ -260,9 +277,8 @@ g = new GridBagConstraints();
 		JComboBox filter = new JComboBox(filters);
 		filter.setSelectedIndex(selectedIndex);
 		
-		JTextField field1 = new JTextField(20);
+		JTextField field1 = new JTextField(s, 20);
 		
-		JCheckBox c1;
 		JRadioButton r1;
 		
 		JLabel state = new JLabel("State: ");
@@ -323,6 +339,7 @@ g = new GridBagConstraints();
 			g.gridy = 0;
 		}
 		
+		
 		bottomCenterPanel.add(add, g);
 		g.gridx = 2;
 		bottomCenterPanel.add(remove, g);
@@ -333,6 +350,14 @@ g = new GridBagConstraints();
 		add(topPanel, BorderLayout.NORTH);
 		add(bottomPanel, BorderLayout.SOUTH);
 		add(scrollPane, BorderLayout.CENTER);
+		field1.requestFocusInWindow();
+		
+		/* check if first time running to create master list of states */
+		if(initialRun == false) {
+			masterList.addAll(stateList);
+			initialRun = true;
+		}
+		
 		
 		revalidate();
 		
@@ -342,22 +367,18 @@ g = new GridBagConstraints();
 				selectedIndex = filter.getSelectedIndex();
 				if(selectedIndex == 1) {
 					Collections.sort(stateList, State.StateNameSortZA);
-					System.out.println("Z-A");
 				}
 				
 				if(selectedIndex == 0) {
 					Collections.sort(stateList, State.StateNameSortAZ);
-					System.out.println("A-Z");
 				}
 				
 				if(selectedIndex == 2) {
 					Collections.sort(stateList, State.StatePopSortLH);
-					System.out.println("L-H");
 				}
 				
 				if(selectedIndex == 3) {
 					Collections.sort(stateList, State.StatePopSortHL);
-					System.out.println("H-L");
 				}
 
 				states();
@@ -396,6 +417,7 @@ g = new GridBagConstraints();
 					if(stateCheckList.get(i).isSelected()) {
 						selected = stateList.get(i);
 						stateList.remove(i);
+						masterList.remove(i);
 						JOptionPane.showMessageDialog(null, selected.getName() + " has been removed");
 					}
 				}
@@ -403,18 +425,40 @@ g = new GridBagConstraints();
 			}
 		});
 		
-		/* add action to the 'search' text field*/
-		field1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ArrayList<State> filter = new ArrayList<State>();
-				String s = field1.getText();
-				for(int i = 0; i < stateList.size(); i++) {
-					if(stateList.get(i).getName().contains(s)) {
-						filter.add(stateList.get(i));
+		/* adds actions for test field filtering of the state list */
+		field1.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				update();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				update();
+
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				update();
+
+			}
+			
+			public void update() {
+
+				s = field1.getText();
+				for(int i = 0; i < masterList.size(); i++) {
+					if(masterList.get(i).getName().toLowerCase().contains(s)) {
+						filterList.add(masterList.get(i));
 					}
 				}
-				
-				stateList = filter;
+				stateList.clear();
+				stateList.addAll(filterList);
+				filterList.clear();
 				states();
 			}
 		});
